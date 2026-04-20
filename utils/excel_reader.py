@@ -1,15 +1,18 @@
 import os
 import pandas as pd
 
-def read_excel_as_dicts(relative_path: str, sheet_name: str):
-    """
-    Reads an Excel sheet and returns list of dicts.
-    relative_path example: "data/Testcase.xlsx"
-    sheet_name example: "Login"
-    """
-    project_root = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-    excel_path = os.path.join(project_root, relative_path)
+def read_excel(relative_path, sheet="Login"):
+    path = os.path.join(
+        os.path.dirname(os.path.dirname(os.path.abspath(__file__))),
+        relative_path
+    )
 
-    df = pd.read_excel(excel_path, sheet_name=sheet_name, engine="openpyxl")
-    df = df.fillna("")  # replace NaN with empty strings
-    return df.to_dict(orient="records")
+    xl = pd.ExcelFile(path, engine="openpyxl")
+    sheet = next((s for s in xl.sheet_names if s.strip().lower() == sheet.lower()), None)
+
+    if not sheet:
+        raise ValueError(f"Sheet not found. Available sheets: {xl.sheet_names}")
+
+    return pd.read_excel(path, sheet_name=sheet, engine="openpyxl")\
+             .fillna("")\
+             .to_dict(orient="records")

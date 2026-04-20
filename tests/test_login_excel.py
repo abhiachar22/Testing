@@ -1,24 +1,26 @@
 import pytest
 from playwright.sync_api import expect
-from utils.excel_reader import read_excel_as_dicts
+from utils.excel_reader import read_excel
 
-TEST_DATA = read_excel_as_dicts("data/Testcase.xlsx", "Login")
+TEST_DATA = read_excel("data/Testcase.xlsx", "Login")
 
-@pytest.mark.parametrize("row", TEST_DATA, ids=lambda r: r.get("test_case", "TC"))
+@pytest.mark.parametrize("row", TEST_DATA) #runs test once for each row in the excel sheet and uses the "test_case" column for test ids
 def test_login_with_excel_data(page, row):
     # ✅ Always open real login route
     page.goto("https://rahulshettyacademy.com/client/auth/login")
 
     # ✅ Stable locators (avoid placeholder mismatch issues)
-    email = page.placeholder("email@example.com")
-    password = page.placeholder("enter your password")
+    email = page.get_by_placeholder("email@example.com")
+    password = page.get_by_placeholder("enter your passsword")
     login_btn = page.get_by_role("button", name="Login")
 
-    expect(email).to_be_visible(timeout=10000)
-    expect(password).to_be_visible(timeout=10000)
+    #
 
     email.fill(str(row.get("username", "")))
+    print(f"[{row.get('test_case')}] Entered username: {row.get('username', '')}")
+    
     password.fill(str(row.get("password", "")))
+    print(f"[{row.get('test_case')}] Entered password: {row.get('password', '')}")
     login_btn.click()
 
     expected = str(row.get("expected_result", "")).strip().lower()

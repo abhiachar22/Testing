@@ -30,5 +30,3 @@ def page(playwright):
 # @pytest.fixture(scope="session")
 # def credentials(request):
 #     return request.param   
-
-
