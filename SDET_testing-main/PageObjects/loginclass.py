@@ -3,8 +3,8 @@
 
 class LoginPage:
     
-    def __init__(self,page):
-        self.page=page
+    def __init__(self,page): #initializing the page object
+        self.page=page # passing the page object to the class variable
 
 
 
