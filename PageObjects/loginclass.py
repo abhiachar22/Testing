@@ -3,8 +3,8 @@
 
 class LoginPage:
     
-    def __init__(self,page): #initializing the page object
-        self.page=page # passing the page object to the class variable
+    def __init__(self,page):#init method is used to initialize the class and it takes the page object as an argument
+        self.page=page#page object is used to interact with the web page and it is passed as an argument to the init method and it is assigned to the self.page variable so that it can be used in other methods of the class
 
 
 

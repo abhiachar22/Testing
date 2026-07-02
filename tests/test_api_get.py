@@ -15,7 +15,7 @@ with open("data/credentials.json") as f:  # Corrected file name
 
 @pytest.mark.parametrize('credentials', user_credentials_list)
 def test_e2e_api(playwright: Playwright, credentials):
-    browser = playwright.chromium.launch()
+    browser = playwright.chromium.launch(headless=False)
     context = browser.new_context()
     page = context.new_page()
 

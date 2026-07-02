@@ -1,4 +1,0 @@
-CI trigger file
-Created: 2026-06-15T19:11:00+05:30
-Purpose: trigger GitHub Actions workflow by adding a small commit.
-Trigger everytime when an code is added.
